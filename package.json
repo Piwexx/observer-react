@@ -1,0 +1,84 @@
+{
+  "name": "react-library-hooks-template",
+  "private": false,
+  "version": "0.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "module": "./dist/main.js",
+  "typings": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/main.js"
+    }
+  },
+  "scripts": {
+    "test": "vitest",
+    "build": "tsc -b && vite build",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "npm run lint --fix",
+    "coverage": "vitest run --coverage",
+    "prepare": "husky",
+    "format": "prettier --write .",
+    "commit": "cz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Piwexx/react-library-hooks"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.8.0",
+    "@commitlint/cz-commitlint": "^19.8.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.2",
+    "@semantic-release/npm": "^12.0.1",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^22.15.3",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "@vitejs/plugin-react": "^4.3.1",
+    "@vitest/coverage-v8": "^3.1.2",
+    "commitizen": "^4.3.1",
+    "commitlint": "^19.8.0",
+    "cz-customizable": "^7.4.0",
+    "eslint": "^9.26.0",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.3.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "husky": "^9.1.7",
+    "jsdom": "^26.1.0",
+    "lint-staged": "^15.5.1",
+    "prettier": "^3.5.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "semantic-release": "^24.2.3",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.4",
+    "vite-plugin-dts": "^4.5.3",
+    "vitest": "^3.1.2"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "keywords": [
+    "react-lib"
+  ],
+  "author": "Juan Vigario",
+  "license": "ISC"
+}
