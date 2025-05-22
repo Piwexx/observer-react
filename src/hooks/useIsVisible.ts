@@ -1,26 +1,26 @@
-import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { observe } from 'tu-libreria';
 
-type Ref = React.RefObject<Element | null>;
+export function useIsVisible(ref: React.RefObject<Element>, options: IntersectionObserverInit) {
+  const [isVisible, setIsVisible] = useState(false);
+  const stopRef = useRef<(() => void) | null>(null);
 
-export function useIsVisible(ref: Ref): boolean {
-  const [isIntersecting, setIsIntersecting] = React.useState<boolean>(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
 
-  const observer = new IntersectionObserver((entries) => {
-    const [entry] = entries;
-    setIsIntersecting(entry.isIntersecting);
-  });
+    stopRef.current = observe(
+      el,
+      (entry) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      options,
+    );
 
-  React.useEffect(() => {
-    const currentRef = ref.current;
-    if (currentRef !== null) {
-      observer.observe(currentRef);
-    }
     return () => {
-      if (currentRef !== null) {
-        observer.unobserve(currentRef);
-      }
+      stopRef.current?.();
     };
-  }, [observer, ref]);
+  }, [ref.current, JSON.stringify(options)]);
 
-  return isIntersecting;
+  return isVisible;
 }

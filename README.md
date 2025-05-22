@@ -1,4 +1,4 @@
-# React Library Hooks Boilerplate 
+# React Library Hooks Boilerplate
 
 Este repositorio es una template base para crear librerías en React con Hooks modernas usando TypeScript. Incluye una configuración lista para el desarrollo local, pruebas, publicación automatizada y convenciones de código profesionales.
 
@@ -29,6 +29,7 @@ Este repositorio es una template base para crear librerías en React con Hooks m
    ```bash
    npm install
    ```
+
 ## 📋 Scripts Disponibles
 
 El setup incluye una serie de scripts preconfigurados para facilitar el desarrollo. Estos son los principales:
