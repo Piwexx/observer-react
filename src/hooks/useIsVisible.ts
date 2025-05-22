@@ -11,7 +11,7 @@ export function useIsVisible(ref: React.RefObject<Element>, options: Intersectio
 
     stopRef.current = observe(
       el,
-      (entry) => {
+      (entry: IntersectionObserverEntry) => {
         setIsVisible(entry.isIntersecting);
       },
       options,
