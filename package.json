@@ -83,6 +83,6 @@
   "author": "Juan Vigario",
   "license": "ISC",
   "dependencies": {
-    "observer-ts": "^1.0.6"
+    "observer-ts": "^1.0.13"
   }
 }
