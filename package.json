@@ -21,7 +21,8 @@
     "coverage": "vitest run --coverage",
     "prepare": "husky",
     "format": "prettier --write .",
-    "commit": "cz"
+    "commit": "cz",
+    "dev": "vite"
   },
   "repository": {
     "type": "git",
@@ -80,5 +81,8 @@
     "react-lib"
   ],
   "author": "Juan Vigario",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "observer-ts": "^1.0.6"
+  }
 }
