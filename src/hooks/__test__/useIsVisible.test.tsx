@@ -1,6 +1,5 @@
-import { act, render } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import * as observerModule from 'observer-ts'; // ✅ para spyOn
-import { useEffect, useRef } from 'react';
 
 import { useIsVisible } from '../useIsVisible';
 
@@ -8,20 +7,8 @@ vi.mock('observer-ts');
 
 let triggerCallback: (entry: IntersectionObserverEntry) => void;
 
-function MockComponent({ onVisible }: { onVisible: () => void }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isVisible = useIsVisible(ref, { threshold: 0.5 });
-
-  useEffect(() => {
-    if (isVisible) {
-      onVisible();
-    }
-  }, [isVisible]);
-
-  return <div ref={ref} data-testid="target" />;
-}
-
 describe('useIsVisible', () => {
+  const mockRef = { current: document.createElement('div') };
   const cleanup = vi.fn();
 
   beforeEach(() => {
@@ -34,41 +21,38 @@ describe('useIsVisible', () => {
   });
 
   it('debe ejecutar el callback cuando el elemento se vuelve visible', () => {
-    const onVisible = vi.fn();
-    const { getByTestId } = render(<MockComponent onVisible={onVisible} />);
-    const el = getByTestId('target');
+    const { result } = renderHook(() => useIsVisible(mockRef, {}));
 
     // Simula que el elemento es visible
     act(() => {
       triggerCallback({
-        target: el,
+        target: document.createElement('div') as Element,
         isIntersecting: true,
       } as IntersectionObserverEntry);
     });
 
-    expect(onVisible).toHaveBeenCalled();
+    expect(result.current).toBe(true);
   });
 
   it('no debe ejecutar el callback si el elemento no es visible', () => {
-    const onVisible = vi.fn();
-    const { getByTestId } = render(<MockComponent onVisible={onVisible} />);
-    const el = getByTestId('target');
+    const { result } = renderHook(() => useIsVisible(mockRef, {}));
 
     // Simula que el elemento no es visible
     act(() => {
       triggerCallback({
-        target: el,
+        target: document.createElement('div') as Element,
         isIntersecting: false,
       } as IntersectionObserverEntry);
     });
 
-    expect(onVisible).not.toHaveBeenCalled();
+    expect(result.current).toBe(false);
   });
 
   it('debe limpiar la observación al desmontar', () => {
-    const { unmount } = render(<MockComponent onVisible={() => {}} />);
+    const { unmount } = renderHook(() => useIsVisible(mockRef, {}));
     unmount();
 
     expect(cleanup).toHaveBeenCalled();
+    expect(cleanup).toHaveBeenCalledTimes(1);
   });
 });
