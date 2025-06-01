@@ -18,7 +18,7 @@ export function useMutationObserver(
     const stop = mutationElements(
       el,
       (mutation: MutationRecord) => {
-        const current = extractor(mutation.target);
+        const current = extractor(mutation.target as Element);
 
         if (current !== prevSizeRef.current) {
           prevSizeRef.current = current;
