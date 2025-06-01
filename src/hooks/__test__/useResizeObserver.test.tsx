@@ -3,14 +3,12 @@ import * as observerModule from 'observer-ts'; // ✅ para spyOn
 
 import { useResizeObserver } from '../useResizeObserver';
 
-vi.mock('observer-ts', () => ({
-  resizeElements: vi.fn(),
-}));
+vi.mock('observer-ts');
 
 let triggerCallback: (entry: ResizeObserverEntry) => void;
 
 describe('useResizeObserver', () => {
-  const mockCallbackRef = { current: document.createElement('div') };
+  const mockRef = { current: document.createElement('div') };
   const cleanup = vi.fn();
 
   beforeEach(() => {
@@ -23,7 +21,7 @@ describe('useResizeObserver', () => {
   });
 
   it('debe iniciar el observer y actualizar el tamaño cuando cambia el elemento', () => {
-    const { result } = renderHook(() => useResizeObserver(mockCallbackRef, {}));
+    const { result } = renderHook(() => useResizeObserver(mockRef, {}));
 
     // Simulamos resize
     const mockEntry = {
@@ -38,7 +36,7 @@ describe('useResizeObserver', () => {
   });
 
   it('debe limpiar el observer al desmontar', () => {
-    const { unmount } = renderHook(() => useResizeObserver(mockCallbackRef, {}));
+    const { unmount } = renderHook(() => useResizeObserver(mockRef, {}));
 
     unmount();
 
