@@ -4,18 +4,9 @@ import { useEffect, useRef } from 'react';
 
 import { useIsVisible } from '../useIsVisible';
 
-let triggerCallback: (entry: IntersectionObserverEntry) => void;
-
 vi.mock('observer-ts');
 
-beforeEach(() => {
-  // Mock de observeElements: captura el callback y devuelve cleanup simulado
-  vi.spyOn(observerModule, 'observeElements').mockImplementation((element, callback, options) => {
-    triggerCallback = callback;
-
-    return vi.fn(); // función de cleanup
-  });
-});
+let triggerCallback: (entry: IntersectionObserverEntry) => void;
 
 function MockComponent({ onVisible }: { onVisible: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -31,6 +22,17 @@ function MockComponent({ onVisible }: { onVisible: () => void }) {
 }
 
 describe('useIsVisible', () => {
+  const cleanup = vi.fn();
+
+  beforeEach(() => {
+    // Mock de observeElements: captura el callback y devuelve cleanup simulado
+    vi.spyOn(observerModule, 'observeElements').mockImplementation((element, callback, options) => {
+      triggerCallback = callback;
+
+      return cleanup; // función de cleanup
+    });
+  });
+
   it('debe ejecutar el callback cuando el elemento se vuelve visible', () => {
     const onVisible = vi.fn();
     const { getByTestId } = render(<MockComponent onVisible={onVisible} />);
@@ -64,12 +66,6 @@ describe('useIsVisible', () => {
   });
 
   it('debe limpiar la observación al desmontar', () => {
-    const cleanup = vi.fn();
-    vi.spyOn(observerModule, 'observeElements').mockImplementation((element, callback, options) => {
-      triggerCallback = callback;
-      return cleanup;
-    });
-
     const { unmount } = render(<MockComponent onVisible={() => {}} />);
     unmount();
 

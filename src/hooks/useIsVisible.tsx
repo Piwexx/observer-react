@@ -1,15 +1,14 @@
 import { observeElements } from 'observer-ts';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function useIsVisible(ref: React.RefObject<Element>, options: IntersectionObserverInit) {
   const [isVisible, setIsVisible] = useState(false);
-  const stopRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    stopRef.current = observeElements(
+    const stop = observeElements(
       el,
       (entry: IntersectionObserverEntry) => {
         setIsVisible(entry.isIntersecting);
@@ -18,9 +17,9 @@ export function useIsVisible(ref: React.RefObject<Element>, options: Intersectio
     );
 
     return () => {
-      stopRef.current?.();
+      stop();
     };
-  }, [ref.current, JSON.stringify(options)]);
+  }, [options]);
 
   return isVisible;
 }
