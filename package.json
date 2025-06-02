@@ -1,16 +1,15 @@
 {
-  "name": "react-library-hooks-template",
-  "private": false,
-  "version": "0.0.0",
+  "name": "observer-react-ts",
+  "version": "1.0.0",
   "type": "module",
   "files": [
     "dist"
   ],
-  "module": "./dist/main.js",
+  "module": "./dist/main.es.js",
   "typings": "./dist/main.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/main.js"
+      "import": "./dist/main.es.js"
     }
   },
   "scripts": {
@@ -26,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Piwexx/react-library-hooks"
+    "url": "https://github.com/Piwexx/observer-react"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
